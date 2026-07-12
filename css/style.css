@@ -271,7 +271,7 @@ img { display: block; max-width: 100%; }
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--gap);
-  background: var(--border);
+  background: var(--bg);
   border: 1px solid var(--border);
 }
 
