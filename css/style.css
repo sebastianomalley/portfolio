@@ -275,6 +275,11 @@ img { display: block; max-width: 100%; }
   border: 1px solid var(--border);
 }
 
+.projects-grid::after {
+  content: '';
+  background: var(--bg);
+}
+
 .projects-grid--film {
   grid-template-columns: repeat(2, 1fr);
 }
