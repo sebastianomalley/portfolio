@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230e0e0e'/><text y='.9em' font-size='75' font-family='serif' font-style='italic' fill='%23c8a96e' x='10'>JO</text></svg>">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Jason O'Malley</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="about-page">
+
+  <!-- Nav -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">JO</a>
+      <ul class="nav-links">
+        <li><a href="index.html#code" class="nav-link">Work</a></li>
+        <li><a href="index.html#film" class="nav-link">Film</a></li>
+        <li><a href="about.html" class="nav-link nav-active">About</a></li>
+        <li><a href="resume/resume.pdf" target="_blank" class="nav-link nav-resume">Resume</a></li>
+      </ul>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="about-main">
+
+    <!-- Photo + intro -->
+    <div class="about-hero">
+      <div class="about-photo-wrap">
+        <img src="images/headshot.jpg" alt="Jason O'Malley" class="about-photo">
+      </div>
+      <div class="about-intro">
+        <h1 class="about-name">Jason <em>O'Malley</em></h1>
+        <p class="about-tagline">Developer. Filmmaker. Present in the moments that matter.</p>
+      </div>
+    </div>
+
+    <!-- Body sections -->
+    <div class="about-body">
+
+      <div class="about-block">
+        <div class="about-block-label">The Work</div>
+        <div class="about-block-content">
+          <p>I'm a full stack developer and creative technologist currently completing a Master's in Digital Media Design at Harvard Extension School. My path here ran through film production, high-profile event work in New York, teaching, and a deep curiosity about how things are built — code, stories, communities, and eventually boats.</p>
+          <p>I hold Scrum Product Owner and Product Manager certifications, am pursuing CompTIA Security+, and bring a background in project management and human-centered thinking to everything I build. I care about work that actually does something — for the people using it and the people making it.</p>
+        </div>
+      </div>
+
+      <div class="about-block">
+        <div class="about-block-label">Beyond the Screen</div>
+        <div class="about-block-content">
+          <p>I'm an ultra runner — yes, by choice — and I've recently caught the golf bug hard. I'm working my way through every course in the DMV area and genuinely always down for a round. If you want to tee up, let's go. Seriously. Hiring me is optional. Golf is not.</p>
+          <p>I shoot archery, make documentary and animated short films under SugarRat Productions, and donate time to causes I believe in. I explore DC's museum circuit whenever I'm in the area and eat my way through every cultural food scene I land in.</p>
+          <p>I'm a trained death doula for both humans and companion animals — two separate certifications I completed at the University of Vermont. It's taught me more about presence and meaningful connection than anything else I've done. The same qualities that make someone good in that room — listening, honesty, showing up — are the ones I bring to every team I'm part of.</p>
+          <p>I share my life with two elder Shih Tzus named Peanut and Buster, who have strong opinions about everything and are not shy about sharing them.</p>
+        </div>
+      </div>
+
+      <div class="about-block">
+        <div class="about-block-label">Currently Building</div>
+        <div class="about-block-content">
+          <p>A small drone fleet — designing and programming my own drones with the goal of creating original light shows. I'm exploring how 3D printing can extend what's possible with custom hardware. It sits at the intersection of code, fabrication, and spectacle, which feels about right.</p>
+          <p>Also learning woodworking. The long game is building a classical wooden boat by hand. It'll take a while. That's kind of the point.</p>
+        </div>
+      </div>
+
+      <div class="about-block">
+        <div class="about-block-label">On Learning</div>
+        <div class="about-block-content">
+          <p>Whether it's career-driven or just something that caught my attention — I love trying new things, meeting new people, and going deep on whatever's in front of me. Not afraid of the hard stuff. Actually, that's usually where it gets interesting.</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+<!-- Contact Modal -->
+  <div class="modal-overlay" id="contactModal" aria-hidden="true" role="dialog" aria-labelledby="contactTitle">
+    <div class="modal">
+      <button class="modal-close" id="contactClose" aria-label="Close modal">✕</button>
+      <p class="modal-eyebrow">Get in Touch</p>
+      <h3 class="modal-title" id="contactTitle">Let's Connect!</h3>
+      <p class="modal-desc" id="contactDesc">Send a message and Jason will get back to you within 48 hours.</p>
+      <form class="modal-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="52fb4f5c-e107-43de-b394-8b9e88a016b4">
+        <input type="hidden" name="subject" value="Portfolio Contact — Jason O'Malley">
+        <input class="modal-input" type="text" name="name" placeholder="Your Name" required>
+        <input class="modal-input" type="email" name="email" placeholder="Your Email" required>
+        <textarea class="modal-input modal-textarea" name="message" placeholder="Your message..." rows="4" required></textarea>
+        <button class="modal-submit" type="submit">Send Message</button>
+      </form>
+      <div class="modal-success" id="contactSuccess" aria-live="polite">
+        <p class="modal-success-title">Message sent.</p>
+        <p class="modal-success-sub">Jason will be in touch within 48 hours.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="https://github.com/sebastianomalley" target="_blank" aria-label="GitHub">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        </a>
+        <a href="https://linkedin.com/in/jasonaomalley" target="_blank" aria-label="LinkedIn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+        <a href="#" id="contactBtn" aria-label="Email">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
