@@ -278,6 +278,7 @@ img { display: block; max-width: 100%; }
 .projects-grid::after {
   content: '';
   background: var(--bg);
+  grid-column: span 1;
 }
 
 .projects-grid--film {
