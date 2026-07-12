@@ -270,15 +270,9 @@ img { display: block; max-width: 100%; }
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--gap);
+  gap: 1px;
   background: var(--bg);
-  border: 1px solid var(--border);
-}
-
-.projects-grid::after {
-  content: '';
-  background: var(--bg);
-  grid-column: span 1;
+  border: none;
 }
 
 .projects-grid--film {
@@ -290,6 +284,7 @@ img { display: block; max-width: 100%; }
   transition: background 0.25s;
   position: relative;
   overflow: hidden;
+  border: 1px solid var(--border);
 }
 
 .project-card::after {
