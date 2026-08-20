@@ -10,8 +10,9 @@ function updateScrollIndicator() {
   if (!scrollThumb) return;
   const scrollTop = window.scrollY;
   const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-  const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-  scrollThumb.style.height = pct + '%';
+  let pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  if (docHeight - scrollTop <= 4) pct = 100;
+  scrollThumb.style.height = Math.min(pct, 100) + '%';
 }
 
 // ─── Scroll Reveal ───────────────────────────────────────────────────────────
