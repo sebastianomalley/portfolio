@@ -786,3 +786,40 @@ footer {
 .project-card--thumb:hover .card-thumb {
   filter: brightness(0.9);
 }
+
+/* =====================
+   FILM THUMBNAIL GRADING
+===================== */
+
+/* Documentary — tame snow and cool whites */
+.film-thumb--eiaa {
+  filter:
+    brightness(0.52)
+    contrast(1.18)
+    saturate(0.72)
+    sepia(0.08);
+}
+
+/* Sugar Rat — already dark, just refine it */
+.film-thumb--sugarrat {
+  filter:
+    brightness(0.68)
+    contrast(1.10)
+    saturate(0.82);
+}
+
+/* Hover states */
+.project-card--film:hover .film-thumb--eiaa {
+  filter:
+    brightness(0.66)
+    contrast(1.14)
+    saturate(0.78)
+    sepia(0.05);
+}
+
+.project-card--film:hover .film-thumb--sugarrat {
+  filter:
+    brightness(0.80)
+    contrast(1.06)
+    saturate(0.88);
+}
