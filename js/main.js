@@ -1,139 +1,190 @@
-// ---------- reveal once everything is truly ready ----------
-Promise.all([
-  new Promise(function(resolve){
-    if (document.readyState === 'complete') resolve();
-    else window.addEventListener('load', resolve);
-  }),
-  document.fonts ? document.fonts.ready : Promise.resolve()
-]).then(function(){
-  document.body.classList.add('ready');
+/**
+ * main.js
+ * Jason O'Malley Portfolio
+ */
+
+// ─── Scroll Progress Indicator ───────────────────────────────────────────────
+const scrollThumb = document.getElementById('scrollThumb');
+
+function updateScrollIndicator() {
+  if (!scrollThumb) return;
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  let pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  if (docHeight - scrollTop <= 4) pct = 100;
+  scrollThumb.style.height = Math.min(pct, 100) + '%';
+}
+
+// ─── Scroll Reveal ───────────────────────────────────────────────────────────
+const revealEls = document.querySelectorAll('.project-card, .about-block, .about-hero');
+revealEls.forEach(el => el.classList.add('reveal'));
+
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+revealEls.forEach(el => revealObserver.observe(el));
+
+// ─── Nav Active State ─────────────────────────────────────────────────────────
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+
+function updateActiveNav() {
+  let current = '';
+  sections.forEach(section => {
+    if (window.scrollY >= section.offsetTop - 100) {
+      current = section.getAttribute('id');
+    }
+  });
+  navLinks.forEach(link => {
+    link.classList.remove('nav-active');
+    if (link.getAttribute('href') === '#' + current) {
+      link.classList.add('nav-active');
+    }
+  });
+}
+
+// ─── Mobile Nav Toggle ────────────────────────────────────────────────────────
+const navToggle = document.querySelector('.nav-toggle');
+const navLinksList = document.querySelector('.nav-links');
+
+if (navToggle && navLinksList) {
+  navToggle.addEventListener('click', () => {
+    navLinksList.classList.toggle('open');
+  });
+  navLinksList.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => navLinksList.classList.remove('open'));
+  });
+}
+
+// ─── Screening Modal ──────────────────────────────────────────────────────────
+const modal = document.getElementById('screeningModal');
+const screeningBtn = document.getElementById('screeningBtn');
+const modalClose = document.getElementById('modalClose');
+const screeningForm = document.getElementById('screeningForm');
+const screeningSuccess = document.getElementById('screeningSuccess');
+
+function openModal() {
+  if (!modal) return;
+  modal.classList.add('is-open');
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  if (!modal) return;
+  modal.classList.remove('is-open');
+  modal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+if (screeningBtn) {
+  screeningBtn.addEventListener('click', openModal);
+}
+
+if (modalClose) {
+  modalClose.addEventListener('click', closeModal);
+}
+
+if (modal) {
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeModal();
 });
 
-// ---------- booking links ----------
-// Paste a scheduling link here (Calendly, Cal.com, etc.) and the matching
-// buttons will go straight to it. Leave it empty and they open the form.
-var BOOKING = {
-  session: '', // "Book a session" buttons (photography)
-  call: ''     // "Book an intro call" buttons (builds, retainer)
-};
-
-// What the form says, depending on which button opened it
-var CONTEXT = {
-  project: {
-    title: 'Start a project',
-    label: 'What are you looking to build?',
-    subject: 'New inquiry from adigitalmediastudio.com'
-  },
-  session: {
-    title: 'Book a session',
-    label: 'What kind of shoot, and roughly when?',
-    subject: 'Photo session request from adigitalmediastudio.com'
-  },
-  call: {
-    title: 'Book an intro call',
-    label: 'What are you working on? Add a few times that work for a call.',
-    subject: 'Intro call request from adigitalmediastudio.com'
-  }
-};
-
-// ---------- contact modal open/close ----------
-var overlay = document.getElementById('contactOverlay');
-var closeBtn = document.getElementById('closeContact');
-var formView = document.getElementById('formView');
-var successView = document.getElementById('successView');
-var successCloseBtn = document.getElementById('successClose');
-var modalTitle = document.getElementById('modalTitle');
-var messageLabel = document.querySelector('label[for="message"]');
-var subjectInput = document.querySelector('#contactForm input[name="subject"]');
-var lastOpener = null;
-
-function resetModalView(){
-  formView.hidden = false;
-  successView.hidden = true;
-}
-
-function setContext(type){
-  var c = CONTEXT[type] || CONTEXT.project;
-  if (modalTitle) modalTitle.textContent = c.title;
-  if (messageLabel) messageLabel.textContent = c.label;
-  if (subjectInput) subjectInput.value = c.subject;
-}
-
-function openModal(type){
-  setContext(type);
-  overlay.classList.add('open');
-  document.getElementById('name').focus();
-  document.addEventListener('keydown', onEsc);
-}
-function closeModal(){
-  overlay.classList.remove('open');
-  document.removeEventListener('keydown', onEsc);
-  if (lastOpener) lastOpener.focus();
-  // Reset back to the form after the close animation/transition settles
-  setTimeout(resetModalView, 200);
-}
-function onEsc(e){ if (e.key === 'Escape') closeModal(); }
-
-document.querySelectorAll('#openContact, [data-contact]').forEach(function(btn){
-  btn.addEventListener('click', function(e){
-    var type = btn.getAttribute('data-contact') || 'project';
-    if (BOOKING[type]){
-      // A booking link is set: go there instead of the form
-      e.preventDefault();
-      window.open(BOOKING[type], '_blank', 'noopener');
-      return;
-    }
+if (screeningForm) {
+  screeningForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    lastOpener = btn;
-    openModal(type);
-  });
-});
-closeBtn.addEventListener('click', closeModal);
-successCloseBtn.addEventListener('click', closeModal);
-overlay.addEventListener('click', function(e){
-  if (e.target === overlay) closeModal();
-});
-
-// ---------- contact form submit (Web3Forms) ----------
-var form = document.getElementById('contactForm');
-var submitBtn = document.getElementById('submitBtn');
-var status = document.getElementById('formStatus');
-
-form.addEventListener('submit', function(e){
-  e.preventDefault();
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'Sending…';
-  status.className = 'form-status';
-
-  var data = new FormData(form);
-
-  fetch('https://api.web3forms.com/submit', {
-    method: 'POST',
-    headers: { 'Accept': 'application/json' },
-    body: data
-  })
-  .then(function(res){ return res.json(); })
-  .then(function(json){
-    if (json.success){
-      form.reset();
-      submitBtn.textContent = 'Send message';
-      submitBtn.disabled = false;
-      status.className = 'form-status';
-      // Swap the whole form out for a clean confirmation state
-      formView.hidden = true;
-      successView.hidden = false;
-      successCloseBtn.focus();
-    } else {
-      throw new Error(json.message || 'Something went wrong');
+    const data = new FormData(screeningForm);
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: data
+      });
+      if (res.ok) {
+        document.querySelector('.modal-desc').style.display = 'none';
+        document.querySelector('.modal-title').style.display = 'none';
+        document.querySelector('.modal-eyebrow').style.display = 'none';
+        screeningForm.style.display = 'none';
+        screeningSuccess.classList.add('is-visible');
+      }
+    } catch (err) {
+      console.error('Form submission error:', err);
     }
-  })
-  .catch(function(){
-    status.textContent = 'Something went wrong. Email me directly at adigitalmediastudio@gmail.com.';
-    status.className = 'form-status show err';
-    submitBtn.textContent = 'Send message';
-    submitBtn.disabled = false;
   });
+}
+
+// ─── Scroll Event ─────────────────────────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  updateScrollIndicator();
+  updateActiveNav();
+}, { passive: true });
+
+// Init
+updateScrollIndicator();
+updateActiveNav();
+
+// ─── Contact Modal ────────────────────────────────────────────────────────────
+const contactModal = document.getElementById('contactModal');
+const contactBtn = document.getElementById('contactBtn');
+const contactClose = document.getElementById('contactClose');
+const contactForm = document.getElementById('contactForm');
+const contactSuccess = document.getElementById('contactSuccess');
+
+function openContactModal() {
+  if (!contactModal) return;
+  contactModal.classList.add('is-open');
+  contactModal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeContactModal() {
+  if (!contactModal) return;
+  contactModal.classList.remove('is-open');
+  contactModal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+if (contactBtn) contactBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  openContactModal();
 });
 
-// ---------- keep footer year current ----------
-document.querySelectorAll('.yr').forEach(function(el){ el.textContent = new Date().getFullYear(); });
+if (contactClose) contactClose.addEventListener('click', closeContactModal);
+
+if (contactModal) {
+  contactModal.addEventListener('click', (e) => {
+    if (e.target === contactModal) closeContactModal();
+  });
+}
+
+if (contactForm) {
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = new FormData(contactForm);
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: data
+      });
+      if (res.ok) {
+        document.getElementById('contactDesc').style.display = 'none';
+        document.getElementById('contactTitle').style.display = 'none';
+        document.querySelector('#contactModal .modal-eyebrow').style.display = 'none';
+        contactForm.style.display = 'none';
+        contactSuccess.classList.add('is-visible');
+      }
+    } catch (err) {
+      console.error('Contact form error:', err);
+    }
+  });
+}
